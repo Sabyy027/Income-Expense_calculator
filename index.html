@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Income Expense Calculator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100..900&display=swap" rel="stylesheet">
+  <style>
+    * {
+      font-family: 'Lexend Deca', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen p-6">
+  <div class="max-w-7xl mx-auto">
+    <!-- Header -->
+    <div class="text-center mb-8">
+      <h1 class="text-4xl font-bold text-gray-800 mb-2 flex items-center justify-center gap-3">
+        
+        Income Expense Calculator
+      </h1>
+      <p class="text-gray-600">Track your finances with ease and precision</p>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-8">
+      <!-- Left Column - Calculator Section -->
+      <div class="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-6 flex items-center gap-3">
+          <svg class="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+          </svg>
+          Financial Calculator
+        </h2>
+        
+        <!-- Totals Dashboard -->
+        <div class="grid grid-cols-3 gap-4 mb-8">
+          <div class="bg-gradient-to-r from-green-50 to-green-100 p-4 rounded-xl border border-green-200">
+            <div class="flex items-center gap-2 mb-1">
+              <svg class="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+              <span class="text-sm font-medium text-green-700">Income</span>
+            </div>
+            <div class="text-2xl font-bold text-green-600">₹<span id="total-income">0</span></div>
+          </div>
+          
+          <div class="bg-gradient-to-r from-red-50 to-red-100 p-4 rounded-xl border border-red-200">
+            <div class="flex items-center gap-2 mb-1">
+              <svg class="w-5 h-5 text-red-600" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11H7v-2h10v2z"/>
+              </svg>
+              <span class="text-sm font-medium text-red-700">Expense</span>
+            </div>
+            <div class="text-2xl font-bold text-red-600">₹<span id="total-expense">0</span></div>
+          </div>
+          
+          <div class="bg-gradient-to-r from-blue-50 to-blue-100 p-4 rounded-xl border border-blue-200">
+            <div class="flex items-center gap-2 mb-1">
+              <svg class="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M9 11H7v6h2v-6zm4 0h-2v6h2v-6zm4 0h-2v6h2v-6zm2.5-9H19V1h-2v1H7V1H5v1H3.5C2.67 2 2 2.67 2 3.5v16C2 20.33 2.67 21 3.5 21h17c.83 0 1.5-.67 1.5-1.5v-16C22 2.67 21.33 2 20.5 2z"/>
+              </svg>
+              <span class="text-sm font-medium text-blue-700">Balance</span>
+            </div>
+            <div class="text-2xl font-bold text-blue-600">₹<span id="net-balance">0</span></div>
+          </div>
+        </div>
+
+        <!-- Transaction Form -->
+        <form id="transaction-form" class="space-y-6">
+          <div class="space-y-4">
+            <div class="relative">
+              <input type="text" id="description" placeholder="Transaction description" 
+                     class="w-full p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 shadow-sm" required>
+            </div>
+            
+            <div class="relative">
+              <input type="number" id="amount" placeholder="Amount (₹)" 
+                     class="w-full p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 shadow-sm" required>
+            </div>
+            
+            <div class="flex gap-6">
+              <label class="flex items-center gap-3 cursor-pointer p-3 rounded-lg hover:bg-gray-50 transition-colors">
+                <input type="radio" name="type" value="income" class="w-4 h-4 text-green-600 focus:ring-green-500" required>
+                
+                <span class="font-medium text-gray-700">Income</span>
+              </label>
+              
+              <label class="flex items-center gap-3 cursor-pointer p-3 rounded-lg hover:bg-gray-50 transition-colors">
+                <input type="radio" name="type" value="expense" class="w-4 h-4 text-red-600 focus:ring-red-500">
+                
+                <span class="font-medium text-gray-700">Expense</span>
+              </label>
+            </div>
+          </div>
+          
+          <div class="flex gap-4">
+            <button type="submit" class="flex-1 bg-gradient-to-r from-green-600 to-green-700 text-white py-4 px-6 rounded-xl font-semibold hover:from-green-700 hover:to-green-800 transform hover:scale-105 transition-all duration-200 shadow-lg flex items-center justify-center gap-2">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+              </svg>
+              Add Transaction
+            </button>
+            <button type="reset" class="bg-gradient-to-r from-gray-500 to-gray-600 text-white py-4 px-6 rounded-xl font-semibold hover:from-gray-600 hover:to-gray-700 transform hover:scale-105 transition-all duration-200 shadow-lg flex items-center justify-center gap-2">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
+              </svg>
+              Reset
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Right Column - Transaction History -->
+      <div class="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-6 flex items-center gap-3">
+          <svg class="w-6 h-6 text-purple-600" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/>
+          </svg>
+          Transaction History
+        </h2>
+
+        <!-- Filters -->
+        <div class="flex gap-2 mb-6 bg-gray-50 p-2 rounded-xl">
+          <label class="flex-1">
+            <input type="radio" name="filter" value="all" class="sr-only" checked>
+            <div class="filter-btn text-center py-2 px-4 rounded-lg cursor-pointer transition-all duration-200 font-medium">All</div>
+          </label>
+          <label class="flex-1">
+            <input type="radio" name="filter" value="income" class="sr-only">
+            <div class="filter-btn text-center py-2 px-4 rounded-lg cursor-pointer transition-all duration-200 font-medium">Income</div>
+          </label>
+          <label class="flex-1">
+            <input type="radio" name="filter" value="expense" class="sr-only">
+            <div class="filter-btn text-center py-2 px-4 rounded-lg cursor-pointer transition-all duration-200 font-medium">Expense</div>
+          </label>
+        </div>
+
+        <!-- Transaction List -->
+        <div class="max-h-96 overflow-y-auto">
+          <ul id="transaction-list" class="space-y-3"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
